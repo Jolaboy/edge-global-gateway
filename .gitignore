@@ -1,0 +1,12 @@
+# Node caching blocks
+node_modules/
+.wrangler/
+dist/
+
+# Terraform variables and cache records
+.terraform/
+*.tfstate*
+*.tfvars
+
+# System files
+.DS_Store

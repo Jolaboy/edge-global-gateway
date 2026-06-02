@@ -1,0 +1,11 @@
+// Cloudflare Wrangler Engine Manifest
+name = "edge-global-gateway"
+main = "src/index.ts"
+compatibility_date = "2026-06-01"
+
+[vars]
+ENVIRONMENT = "production"
+AWS_REGION_FALLBACK = "us-east-1"
+
+[observability]
+enabled = true

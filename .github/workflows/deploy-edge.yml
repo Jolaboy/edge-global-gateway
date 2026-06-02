@@ -1,0 +1,41 @@
+# GitHub Actions Validation Workflow
+name: Global Edge Middleware Validation CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-edge-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Runtime Dependencies
+        run: npm install wrangler typescript @cloudflare/workers-types --save-dev
+
+      - name: Validate TypeScript Compilation Parity
+        run: npx tsc --noEmit
+
+  validate-database-layer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.0
+
+      - name: Validate Terraform Infrastructure Manifests
+        run: |
+          cd terraform-database
+          terraform init -backend=false
+          terraform validate
