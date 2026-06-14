@@ -1,3 +1,5 @@
+import type { ExecutionContext } from '@cloudflare/workers-types';
+
 // V8 Edge Runtime Code
 export interface Env {
   ENVIRONMENT: string;
@@ -36,7 +38,7 @@ export default {
         
         // Enrich payload elements inside the V8 cache isolation edge directly
         const enrichedPayload = {
-          ...structuralBody,
+          structuralBody,
           ingress_edge_node: (request as any).cf?.colo || "UNKNOWN_NODE",
           client_ip_hashed: btoa(clientIp).slice(0, 12)
         };
